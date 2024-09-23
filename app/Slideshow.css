@@ -1,0 +1,196 @@
+/* src/Slideshow.css */
+.slideshow-container {
+  position: relative;
+  width: 100%; /* Total width of the container */
+  max-width: 115.2rem;
+  aspect-ratio: 2 / 1;
+  margin: 0 auto 1.5rem;
+  overflow: hidden;
+  border-radius: 1.5rem;
+}
+
+.slideshow {
+  display: flex;
+  position: relative;
+  height: 100%;
+  transition: transform 0.5s ease;
+}
+
+.slide {
+  height: 100%;
+  position: absolute;
+  transition: transform 1s cubic-bezier(0.2, 0.9, 0.1, 1), opacity 1s cubic-bezier(0.2, 0.9, 0.1, 1), left 1s cubic-bezier(0.2, 0.9, 0.1, 1), width 1s cubic-bezier(0.2, 0.9, 0.1, 1);
+  opacity: 0;
+  object-fit: cover;
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+.slide.current {
+  opacity: 1;
+  left: 0; /* Centers the current slide */
+  z-index: 3;
+  width: 50%;
+}
+
+.slide.previous {
+  opacity: 0;
+  left: 0;
+  z-index: 2;
+  width: 0;
+  transform: scale(0.8);
+}
+
+.slide.next {
+  opacity: 1;
+  left: calc(50% + 1rem); /* Position the next slide */
+  z-index: 2;
+  width: calc(30% - 1rem);
+}
+
+.slide.next-next {
+  opacity: 0.75;
+  left: calc(80% + 1rem); /* Position the next-next slide */
+  z-index: 1;
+  width: calc(20% - 1rem);
+}
+
+.slide.next-next-next {
+  opacity: 0;
+  left: 100%; /* Position the next-next slide */
+  z-index: 1;
+  width: 0;
+  transform: scale(0.8);
+}
+
+.slide.hidden {
+  opacity: 0;
+}
+
+/* Navigation buttons */
+button.prev, button.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--button-hover);
+  border: none;
+  color: var(--foreground);
+  width: 5rem;
+  height: 5rem;
+  line-height: 5rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 5;
+  transition: background-color 0.3s ease;
+}
+
+button.prev {
+  left: 10px;
+}
+
+button.next {
+  right: 10px;
+}
+
+button.prev:hover, button.next:hover {
+  background-color: var(--button-active);
+  transition: background-color 0.1s ease;
+}
+
+button.prev:active, button.next:active {
+  background-color: var(--button-hold);
+  transition: background-color 0.1s ease;
+}
+
+/* Dots */
+.dots {
+  position: absolute;
+  bottom: 1rem;
+  left: 25%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 8;
+}
+
+.dot {
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  border-radius: 1rem;
+  background-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.dot.active-dot {
+  width: 3rem;
+  background-color: var(--background);
+}
+
+/* Tooltip for dot */
+.tooltip {
+  visibility: hidden;
+  background-color: var(--background);
+  color: var(--foreground);
+  text-align: center;
+  font-size: 1.2rem;
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  position: absolute;
+  bottom: 150%; /* Position above the dot */
+  left: 50%;
+  translate: -50% 0;
+  transform: scale(0.75);
+  transform-origin: bottom;
+  opacity: 0;
+  width: max-content;
+  box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.1, 1.5), opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -0.5rem;
+  border-width: 0.5rem;
+  border-style: solid;
+  border-color: var(--background) transparent transparent transparent;
+}
+
+.dot:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Progress Bar */
+.progress-bar {
+  position: absolute;
+  bottom: 3rem;
+  width: calc(50% - 2rem);
+  max-width: 20rem;
+  translate: -50% 0;
+  left: 25%;
+  height: 0.3rem;
+  border-radius: 1rem;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 5;
+}
+
+.progress-bar > .fill {
+  position: absolute;
+  width: calc(100% * var(--progress));
+  height: 100%;
+  border-radius: 1rem;
+  background-color: #c00040;
+  transition: width 0.1s ease;
+}
